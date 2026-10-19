@@ -41,6 +41,11 @@ def reflection_node(state: AgentState) -> dict:
     """
     Evaluates current evidence for completeness, entity accuracy, and gaps.
     Decides whether to trigger an extra targeted search loop.
+
+    Financial Metric Sanity:
+   - Check if currency units (Crore, Lakhs, Millions, Billions) are logically sound for the company's size.
+   - For franchise businesses (like food/chai chains), distinguish clearly between 'Brand/Network Turnover (GMV)' vs 'Parent Company Direct Revenue (Franchise fee + Royalties)'.
+   - Verify that 'Margins' are represented as percentages (%), never absolute currency.
     """
     company = state["company"]
     findings = state["search_results"]
@@ -167,6 +172,11 @@ def report_node(state: AgentState) -> dict:
     """
     Ingests all accumulated search snippets and synthesizes an executive
     competitive intelligence brief with citations.
+
+    CRITICAL FINANCIAL RULE:
+- Do not invent financial table columns. 
+- If reporting revenue for Indian private limited firms, explicitly distinguish between Company RoC Revenue (usually in ₹ Crores) vs Total Network GMV/Turnover.
+- Never state profit margins in currency units; margins must be percentages. If data is ambiguous in the source snippets, state the raw reported figure and add a clarification note.
     """
     company = state["company"]
     findings = state["search_results"]

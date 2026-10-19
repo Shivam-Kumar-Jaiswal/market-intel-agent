@@ -5,3 +5,4 @@ langchain-google-genai
 tavily-python
 pydantic
 python-dotenv
+streamlit
